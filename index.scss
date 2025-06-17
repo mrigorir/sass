@@ -1,86 +1,40 @@
-@import url("https://fonts.googleapis.com/css2?family=Leckerli+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Wellfleet&family=Wendy+One&family=Raleway&display=swap");
-/* reset styles */
-@media screen and (prefers-color-scheme: dark) {
-  *,
-  html,
-  body {
-    background-color: black;
-    color: whitesmoke;
-  }
-}
-
-* {
-  margin: 0;
-}
-
-body {
-  font-family: Poppins;
-}
-
-ul {
-  padding: 0;
-}
-
-a {
-  text-decoration: none;
-}
-
-hr {
-  border: 0;
-  border-top: dotted 1px #efefef;
-}
-
-img {
-  max-width: 100%;
-}
-
-//theme-colors
-$primary: #326dee;
-$secondary: #1ac888;
-$error: #d32752;
-$info: #f6c31c;
-
-//spacing
-$base-padding: 0.75rem;
-$base-margin: 0.75rem;
-
-//borders
-$base-border-thickness: 1px;
-$base-border-radius: 0.75rem;
+@use './styles/fonts';
+@use './styles/reset';
+@use './styles/variables' as variables;
 
 h1 {
-  color: $primary;
-  margin-bottom: $base-margin;
+  color: variables.$primary;
+  margin-bottom: variables.$base-margin;
 }
 
 a {
-  color: $secondary;
+  color: variables.$secondary;
 }
 
 button {
   color: white;
   border: 0;
-  background: $primary;
-  border-radius: $base-border-radius;
-  padding: $base-padding;
+  background: variables.$primary;
+  border-radius: variables.$base-border-radius;
+  padding: variables.$base-padding;
 }
 
 .error {
-  color: $error;
-  border-color: $error;
-  margin: $base-margin;
-  padding: $base-padding;
-  border-radius: $base-border-radius;
-  border-width: $base-border-thickness;
+  color: variables.$error;
+  border-color: variables.$error;
+  margin: variables.$base-margin;
+  padding: variables.$base-padding;
+  border-radius: variables.$base-border-radius;
+  border-width: variables.$base-border-thickness;
 }
 
 .notification {
-  color: $secondary;
-  border-color: $secondary;
-  margin: $base-margin;
-  padding: $base-padding;
-  border-radius: $base-border-radius;
-  border-width: $base-border-thickness;
+  color: variables.$secondary;
+  border-color: variables.$secondary;
+  margin: variables.$base-margin;
+  padding: variables.$base-padding;
+  border-radius: variables.$base-border-radius;
+  border-width: variables.$base-border-thickness;
 }
 
 .error,

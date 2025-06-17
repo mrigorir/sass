@@ -1,0 +1,34 @@
+/* reset styles */
+@media screen and (prefers-color-scheme: dark) {
+  *,
+  html,
+  body {
+    background-color: black;
+    color: whitesmoke;
+  }
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  font-family: Poppins;
+}
+
+ul {
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+hr {
+  border: 0;
+  border-top: dotted 1px #efefef;
+}
+
+img {
+  max-width: 100%;
+}
