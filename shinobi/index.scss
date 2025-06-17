@@ -5,8 +5,7 @@
 // base and layouts
 @use './styles/reset';
 // colors
-
+@use './styles/colors' as colors;
 //components (button, card, navbar)
 @use './styles/components/card';
-
 // utilities (margin, padding, opacity)

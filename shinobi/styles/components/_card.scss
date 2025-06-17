@@ -1,4 +1,5 @@
 @use '../variables';
+@use '../colors';
 @use 'sass:math';
 @use 'sass:map';
 
@@ -8,7 +9,7 @@
   border: variables.$base-border-thickness solid #ddd;
   box-shadow: variables.$base-box-shadow;
   border-radius: math.div(variables.$base-border-radius, 4);
-  background-color: map.get(variables.$colors, "pink");
+  background-color: map.get(colors.$colors, "pink");
 
   .card-title {
     font-size: variables.$font-size-lg;
