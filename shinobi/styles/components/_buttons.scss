@@ -1,26 +1,29 @@
 @use "../colors";
+@use "../functions";
 @use "../variables";
 @use "sass:map";
+@use 'sass:color';
 
 @mixin btn($bg-color: #e2e2e2, $border: 0) {
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-block;
   padding: variables.$base-padding variables.$base-padding * 2;
   border-radius: variables.$base-border-radius;
   background-color: $bg-color;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
   border: $border;
 }
 
 .btn {
-  @include btn()
+  @include btn();
 }
 
 @each $key, $val in colors.$colors {
+
   .btn-#{$key} {
     @include btn($val);
     &:hover {
-      background-color: lighten($val, 5%);
+      background-color: color.adjust($val, $lightness: 5%);
     }
   }
 
@@ -31,6 +34,15 @@
     );
     &:hover {
       background-color: $val;
+    }
+  }
+
+  .btn-complement-#{$key} {
+    @include btn($val);
+    color: light-comp($val);
+    &:hover {
+      color: $val;
+      background-color: light-comp($val);
     }
   }
 }
