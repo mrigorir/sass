@@ -5,10 +5,10 @@
 @use "./styles/fonts";
 // base and layouts
 @use "./styles/reset";
+@use "./styles/breakpoints";
+@use "./styles/grid";
 // colors
 @use "./styles/colors" as colors;
-// breakpoints
-@use "./styles/breakpoints";
 //components (button, card, navbar)
 @use "./styles/components/card";
 @use "./styles/components/buttons";

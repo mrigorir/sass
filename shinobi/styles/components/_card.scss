@@ -11,7 +11,7 @@
   border: variables.$base-border-thickness solid #ddd;
   box-shadow: variables.$base-box-shadow;
   border-radius: math.div(variables.$base-border-radius, 4);
-  background-color: map.get(colors.$colors, "pink");
+  background-color: map.get(colors.$colors, "gray");
 
   .card-title {
     font-size: variables.$font-size-lg;
