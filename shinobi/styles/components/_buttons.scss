@@ -1,0 +1,36 @@
+@use "../colors";
+@use "../variables";
+@use "sass:map";
+
+@mixin btn($bg-color: #e2e2e2, $border: 0) {
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  padding: variables.$base-padding variables.$base-padding * 2;
+  border-radius: variables.$base-border-radius;
+  background-color: $bg-color;
+  border: $border;
+}
+
+.btn {
+  @include btn()
+}
+
+@each $key, $val in colors.$colors {
+  .btn-#{$key} {
+    @include btn($val);
+    &:hover {
+      background-color: lighten($val, 5%);
+    }
+  }
+
+  .btn-outlined-#{$key} {
+    @include btn(
+      map.get(colors.$colors, "white"),
+      variables.$base-border-thickness solid $val
+    );
+    &:hover {
+      background-color: $val;
+    }
+  }
+}
