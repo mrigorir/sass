@@ -1,7 +1,9 @@
-@use '../variables';
-@use '../colors';
-@use 'sass:math';
-@use 'sass:map';
+@use "../breakpoints" as bp;
+@use "../variables";
+@use "../colors";
+
+@use "sass:math";
+@use "sass:map";
 
 .card {
   display: block;
@@ -23,5 +25,10 @@
     a {
       text-decoration: underline;
     }
+  }
+
+  @include bp.xxl {
+    //background-color: aqua;
+    // display: none;
   }
 }

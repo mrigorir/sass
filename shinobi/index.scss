@@ -1,13 +1,16 @@
 // variables and functions
-@use './styles/functions';
-@use './styles/variables' as variables;
+@use "./styles/functions";
+@use "./styles/variables" as variables;
 // fonts
-@use './styles/fonts';
+@use "./styles/fonts";
 // base and layouts
-@use './styles/reset';
+@use "./styles/reset";
 // colors
-@use './styles/colors' as colors;
+@use "./styles/colors" as colors;
+// breakpoints
+@use "./styles/breakpoints";
 //components (button, card, navbar)
-@use './styles/components/card';
-@use './styles/components/buttons';
+@use "./styles/components/card";
+@use "./styles/components/buttons";
 // utilities (margin, padding, opacity)
+@use "./styles/utilities";
