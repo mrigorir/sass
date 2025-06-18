@@ -27,7 +27,7 @@
     }
   }
 
-  @include bp.xxl {
+  @include bp.respond-to(xxl) {
     //background-color: aqua;
     // display: none;
   }
