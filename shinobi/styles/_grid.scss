@@ -277,20 +277,6 @@ $grid-gaps: (
   }
 }
 
-// Utilidades flex sin breakpoint
-.flex-row {
-  flex-direction: row !important;
-}
-.flex-column {
-  flex-direction: column !important;
-}
-.flex-wrap {
-  flex-wrap: wrap !important;
-}
-.flex-nowrap {
-  flex-wrap: nowrap !important;
-}
-
 // 8. Utilidades de alineación
 $alignments: (
   "start": flex-start,
