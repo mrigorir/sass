@@ -1,128 +1,348 @@
 @use "../styles/breakpoints" as bp;
-@use "../styles/colors" as colors;
-
 @use "sass:math";
 
-$grid-columns: 12;
-$grid-gaps: (
-  "0": 0,
-  "1": 10px,
-  "2": 20px,
-  "3": 30px,
-);
-$layout-values: flex-start, center, flex-end, space-between, space-around,
-  space-evenly;
+// 1. Variables configurables
+$grid-columns: 12 !default;
+$container-max-width: 1200px !default;
+$container-padding: 1.5rem !default;
 
-@mixin column($i) {
-  --col-span: #{$i};
-  flex: 0 0 calc(var(--col-span) / #{$grid-columns} * 100%);
-  
-  @supports (display: grid) {
-    grid-column: span var(--col-span);
+// 2. Sistema de contenedores mejorado
+.container {
+  width: 100%;
+  padding-inline: $container-padding;
+  margin-inline: auto;
+  box-sizing: border-box;
+
+  // Contenedor estándar (centrado con max-width)
+  &--centered {
+    max-width: $container-max-width;
+  }
+
+  // Contenedor fluido (100% ancho)
+  &--fluid {
+    max-width: 100%;
   }
 }
 
-// base layout calsses
-
+// Contenedor responsive por defecto
 .container {
-  box-sizing: border-box;
-  max-width: 1200px;
-  padding: 0 20px;
-  margin: 0 auto;
-  width: 100%;
-  box-sizing: border-box;
+  @include bp.respond-to(xs) {
+    max-width: 100%;
+  }
+
+  @include bp.respond-to(sm) {
+    max-width: 540px;
+  }
+
+  @include bp.respond-to(md) {
+    max-width: 720px;
+  }
+
+  @include bp.respond-to(lg) {
+    max-width: 960px;
+  }
+
+  @include bp.respond-to(xl) {
+    max-width: 1140px;
+  }
+
+  @include bp.respond-to(xxl) {
+    max-width: 1320px;
+  }
+
+  @include bp.respond-to(xxxl) {
+    max-width: 1600px;
+  }
 }
 
+// 2. Sistema de gaps mejorado
+$grid-gaps: (
+  "0": 0,
+  "1": 0.5rem,
+  "2": 1rem,
+  "3": 1.5rem,
+  "4": 2rem,
+  "5": 3rem,
+);
+
+
+// 4. Fila optimizada
 .row {
+  --grid-gap-x: 0;
+  --grid-gap-y: 0;
+
   display: flex;
   flex-wrap: wrap;
+  margin-inline: calc(var(--grid-gap-x) * -1);
+  margin-top: calc(var(--grid-gap-y) * -1);
 
   @supports (display: grid) {
     display: grid;
     grid-template-columns: repeat(var(--grid-columns, #{$grid-columns}), 1fr);
-    gap: var(--grid-gap, 0);
+    gap: var(--grid-gap-y) var(--grid-gap-x);
+    margin-inline: 0;
+    margin-top: 0;
+  }
+
+  > * {
+    box-sizing: border-box;
+    padding-inline: var(--grid-gap-x);
+    margin-top: var(--grid-gap-y);
+
+    @supports (display: grid) {
+      padding-inline: 0;
+      margin-top: 0;
+    }
   }
 }
 
-// grid-gaps
-@each $key, $val in $grid-gaps {
-  .gap-#{$key} > * {
-    padding: $val;
+// 5. Sistema de gaps modular
+@each $name, $size in $grid-gaps {
+  .g-#{$name} {
+    --grid-gap-x: #{$size};
+    --grid-gap-y: #{$size};
   }
 
-  .gap-#{$key} {
-    margin-inline: -$val;
+  .gx-#{$name} {
+    --grid-gap-x: #{$size};
   }
-}
 
-// justify-content-classes
-@each $val in $layout-values {
-  .justify-#{$val} {
-    justify-content: $val;
+  .gy-#{$name} {
+    --grid-gap-y: #{$size};
   }
 }
 
-// col classes
+// 6. Columnas avanzadas
+[class*="col-"] {
+  --col-span: 12;
+  flex: 0 0 calc((var(--col-span) / #{$grid-columns}) * 100%);
+  max-width: calc((var(--col-span) / #{$grid-columns}) * 100%);
 
-.col {
-  transition: all 0.3s ease;
-  &:hover {
+  @supports (display: grid) {
+    grid-column: span var(--col-span);
+    flex: none;
+    max-width: none;
+  }
+
+  // Hover opcional
+  &.col-hoverable:hover {
     transform: scale(1.02);
+    z-index: 2;
+    transition: all 0.3s ease;
   }
 }
 
-@include bp.respond-to(xs) {
-  @for $i from 1 through $grid-columns {
-    .col-xs-#{$i} {
-      @include column($i);
+// 7. Generador automático de columnas
+@each $bp, $size in bp.$breakpoints {
+  @include bp.respond-to($bp) {
+    @for $i from 1 through $grid-columns {
+      .col-#{$bp}-#{$i} {
+        --col-span: #{$i};
+      }
+      // Offset para columnas
+      .offset-#{$bp}-#{$i} {
+        margin-left: calc(#{$i} / #{$grid-columns} * 100%);
+      }
+
+      // Direcciones Flex
+      .flex-#{$bp}-row {
+        flex-direction: row !important;
+      }
+      .flex-#{$bp}-column {
+        flex-direction: column !important;
+      }
+      .flex-#{$bp}-row-reverse {
+        flex-direction: row-reverse !important;
+      }
+      .flex-#{$bp}-column-reverse {
+        flex-direction: column-reverse !important;
+      }
+
+      // Wrap
+      .flex-#{$bp}-wrap {
+        flex-wrap: wrap !important;
+      }
+      .flex-#{$bp}-nowrap {
+        flex-wrap: nowrap !important;
+      }
+      .flex-#{$bp}-wrap-reverse {
+        flex-wrap: wrap-reverse !important;
+      }
+
+      // Justify Content
+      .justify-#{$bp}-start {
+        justify-content: flex-start !important;
+      }
+      .justify-#{$bp}-end {
+        justify-content: flex-end !important;
+      }
+      .justify-#{$bp}-center {
+        justify-content: center !important;
+      }
+      .justify-#{$bp}-between {
+        justify-content: space-between !important;
+      }
+      .justify-#{$bp}-around {
+        justify-content: space-around !important;
+      }
+      .justify-#{$bp}-evenly {
+        justify-content: space-evenly !important;
+      }
+
+      // Align Items
+      .align-#{$bp}-start {
+        align-items: flex-start !important;
+      }
+      .align-#{$bp}-end {
+        align-items: flex-end !important;
+      }
+      .align-#{$bp}-center {
+        align-items: center !important;
+      }
+      .align-#{$bp}-baseline {
+        align-items: baseline !important;
+      }
+      .align-#{$bp}-stretch {
+        align-items: stretch !important;
+      }
+
+      // Align Content
+      .content-#{$bp}-start {
+        align-content: flex-start !important;
+      }
+      .content-#{$bp}-end {
+        align-content: flex-end !important;
+      }
+      .content-#{$bp}-center {
+        align-content: center !important;
+      }
+      .content-#{$bp}-between {
+        align-content: space-between !important;
+      }
+      .content-#{$bp}-around {
+        align-content: space-around !important;
+      }
+      .content-#{$bp}-stretch {
+        align-content: stretch !important;
+      }
+
+      // Align Self
+      .self-#{$bp}-auto {
+        align-self: auto !important;
+      }
+      .self-#{$bp}-start {
+        align-self: flex-start !important;
+      }
+      .self-#{$bp}-end {
+        align-self: flex-end !important;
+      }
+      .self-#{$bp}-center {
+        align-self: center !important;
+      }
+      .self-#{$bp}-stretch {
+        align-self: stretch !important;
+      }
+      .self-#{$bp}-baseline {
+        align-self: baseline !important;
+      }
+
+      // Flex Grow/Shrink
+      .flex-#{$bp}-grow-0 {
+        flex-grow: 0 !important;
+      }
+      .flex-#{$bp}-grow-1 {
+        flex-grow: 1 !important;
+      }
+      .flex-#{$bp}-shrink-0 {
+        flex-shrink: 0 !important;
+      }
+      .flex-#{$bp}-shrink-1 {
+        flex-shrink: 1 !important;
+      }
+    }
+
+    // Clases de utilidad responsive
+    .d-#{$bp}-none {
+      display: none !important;
+    }
+    .d-#{$bp}-block {
+      display: block !important;
+    }
+    .d-#{$bp}-flex {
+      display: flex !important;
+    }
+    .d-#{$bp}-grid {
+      display: grid !important;
     }
   }
 }
 
-@include bp.respond-to(sm) {
-  @for $i from 1 through $grid-columns {
-    .col-sm-#{$i} {
-      @include column($i);
-    }
+// Utilidades flex sin breakpoint
+.flex-row {
+  flex-direction: row !important;
+}
+.flex-column {
+  flex-direction: column !important;
+}
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+.flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+// 8. Utilidades de alineación
+$alignments: (
+  "start": flex-start,
+  "center": center,
+  "end": flex-end,
+  "between": space-between,
+  "around": space-around,
+  "evenly": space-evenly,
+);
+
+@each $name, $value in $alignments {
+  .justify-#{$name} {
+    justify-content: #{$value};
+  }
+
+  .align-#{$name} {
+    align-items: #{$value};
   }
 }
 
-@include bp.respond-to(md) {
-  @for $i from 1 through $grid-columns {
-    .col-md-#{$i} {
-      @include column($i);
-    }
+// 9. Ordenamiento de columnas
+@for $i from 1 through $grid-columns {
+  .order-#{$i} {
+    order: #{$i};
   }
 }
 
-@include bp.respond-to(lg) {
-  @for $i from 1 through $grid-columns {
-    .col-lg-#{$i} {
-      @include column($i);
-    }
-  }
-}
+// 10. Ejemplos de usos en el HTML
+/* <!-- Contenedor estándar centrado -->
+<div class="container container--centered">...</div>
 
-@include bp.respond-to(xl) {
-  @for $i from 1 through $grid-columns {
-    .col-xl-#{$i} {
-      @include column($i);
-    }
-  }
-}
+<!-- Contenedor fluido al 100% -->
+<div class="container container--fluid">...</div>
 
-@include bp.respond-to(xxl) {
-  @for $i from 1 through $grid-columns {
-    .col-xxl-#{$i} {
-      @include column($i);
-    }
-  }
-}
+<!-- Ejemplos de utilidades flex responsivas -->
+<div class="d-flex flex-column flex-md-row justify-center justify-lg-between">
+  <div class="self-start self-md-center">...</div>
+</div>
 
-@include bp.respond-to(xxxl) {
-  @for $i from 1 through $grid-columns {
-    .col-xxxl-#{$i} {
-      @include column($i);
-    }
-  }
-}
+<div class="d-grid flex-wrap flex-lg-nowrap align-start align-xl-end">
+  ...
+</div> 
+
+<div class="col-xs-12">12 columnas en móvil</div>
+
+<div class="col-sm-6">6 columnas en sm (≥576px)</div>
+
+<div class="col-md-4">4 columnas en md (≥768px)</div>
+
+<div class="col-lg-3">3 columnas en lg (≥992px)</div>
+
+<div class="col-xl-2">2 columnas en xl (≥1200px)</div>
+
+<div class="col-xxl-1">1 columna en xxl (≥1400px)</div>
+*/
