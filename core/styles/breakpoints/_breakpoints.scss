@@ -1,0 +1,45 @@
+/* ==========================================================================
+   BREAKPOINTS
+   ========================================================================== */
+
+@use "sass:map";
+
+$breakpoints: (
+  "xs": 0,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl": 1400px,
+  "xxxl": 1800px,
+);
+
+@mixin respond-to($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @error "Breakpoint '#{$breakpoint}' no existe en $breakpoints";
+  }
+}
+
+/* ESTA ES LA FORMA DE INCLUIR LOS BREAKPOINTS EN EL CODIGO: 
+  
+  .container {
+    @include bp.respond-to(xs) {
+      font-size: 3rem;
+      max-width: 100%;
+    }
+    
+    @include bp.respond-to(md) {
+      font-size: 2rem;
+      max-width: 80%;
+    }
+
+    @include bp.respond-to(xl) {
+      font-size: 2rem;
+      max-width: 80%;
+    }
+  }
+*/

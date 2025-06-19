@@ -1,0 +1,20 @@
+/* ==========================================================================
+   INDEX DIRECTORY
+   ========================================================================== */
+// Init config
+@use "./styles/variables" as variables;
+@use "./styles/functions";
+@use "./styles/colors" as colors;
+@use "./styles/base/fonts";
+
+// Base y layout
+@use "./styles/base/base";
+@use "./styles/breakpoints/breakpoints";
+@use "./styles/grid/grid";
+
+// Components
+@use "./styles/components/buttons";
+@use "./styles/components/card";
+
+// Utilities
+@use "./styles/utilities/utilities" as utils;

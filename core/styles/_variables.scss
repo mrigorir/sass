@@ -1,0 +1,47 @@
+/* ==========================================================================
+   VARIABLES & BASE VALUES
+   ========================================================================== */
+
+@use "./colors";
+
+@use "sass:map";
+
+// EJEMPLOS DE MAPS
+// @debug map.get($colors, "purple");
+// @debug map.has-key($colors , "secondary");
+// @debug map.remove($colors, "white");
+// @debug map.merge($colors, ("pink": #ffc0cb));
+
+// spacing
+$base-padding: 0.75rem !default;
+$base-margin: 0.75rem !default;
+
+// borders
+$base-border-thickness: 1px !default;
+$base-border-radius: 0.75rem !default;
+
+// Base shadows
+$base-box-shadow: 1px 3px 5px rgba(0, 0, 0, .1) !default;
+$base-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2) !default;
+
+// font-sizes
+$base-font-size: 1rem !default;
+$font-size-sm: $base-font-size * .75 !default;
+$font-size-lg: $base-font-size * 1.5 !default;
+$font-size-xl: $base-font-size * 2 !default;
+$font-size-xxl: $base-font-size * 3 !default;
+
+// Badge variables
+$badge-font-size: 0.75rem !default;
+$badge-padding-y: 0.35em !default;
+$badge-padding-x: 0.65em !default;
+$badge-border-radius: $base-border-radius !default;
+
+// Component variables
+$component-active-color: map.get(colors.$colors, "white") !default;
+$component-active-bg: map.get(colors.$colors, "primary") !default;
+$border-color: map.get(colors.$colors, "tab-border-color") !default;
+$table-cell-padding: 0.75rem !default;
+$input-padding-y: 0.375rem !default;
+$input-padding-x: 0.75rem !default;
+$input-border-radius: $base-border-radius !default;
