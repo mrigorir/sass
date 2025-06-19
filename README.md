@@ -46,6 +46,15 @@ Este sistema proporciona un conjunto completo de utilidades CSS para crear layou
   - [Grid Responsivo con Hover](#grid-responsivo-con-hover)
   - [Flexbox Responsivo](#flexbox-responsivo)
   - [Dashboard Complejo](#dashboard-complejo)
+  - [🚀 Cómo Iniciar el Proyecto](#-cómo-iniciar-el-proyecto)
+    - [Opción 1: Usando Gulp (Recomendado para desarrollo)](#opción-1-usando-gulp-recomendado-para-desarrollo)
+    - [Opción 2: Usando la extensión "Watch Sass" (VS Code)](#opción-2-usando-la-extensión-watch-sass-vs-code)
+    - [Opción 3: Visualizar el HTML](#opción-3-visualizar-el-html)
+  - [Autor](#autor)
+  - [🤝 Contribuciones](#-contribuciones)
+  - [Muestren su apoyo](#muestren-su-apoyo)
+  - [Reconocimientos](#reconocimientos)
+  - [📝 Licencia](#-licencia)
 
 ## Contenedores
 
@@ -494,3 +503,80 @@ Control tipográfico avanzado.
   </div>
 </div>
 ```
+
+## 🚀 Cómo Iniciar el Proyecto
+
+### Opción 1: Usando Gulp (Recomendado para desarrollo)
+
+1. **Instala las dependencias** (si no lo has hecho):
+   ```bash
+   npm install
+   ```
+2. **Ejecuta Gulp** para compilar Sass y activar el watch:
+
+```bash
+gulp
+```
+Esto compilará automáticamente tus archivos SCSS cuando hagas cambios.
+
+### Opción 2: Usando la extensión "Watch Sass" (VS Code)
+
+1. Instala la extensión "Live Sass Compiler" en VS Code
+
+2. Haz clic derecho en tu archivo SCSS principal
+
+3. Selecciona "Watch Sass" desde el menú contextual
+
+### Opción 3: Visualizar el HTML
+
+Puedes abrir tus archivos HTML de dos formas:
+
+1. Directamente en el navegador:
+
+- Haz doble click en el archivo HTML
+
+- Ábrelo con tu navegador favorito
+
+2. Con Live Server (mejor para desarrollo):
+
+- Instala la extensión "Live Server" en VS Code
+
+- Haz clic derecho en el archivo HTML
+
+- Selecciona "Open with Live Server"
+
+- Se abrirá automáticamente en http://localhost:5500
+
+💡 Recomendación: Para desarrollo profesional usa Gulp + Live Server para tener:
+
+- Compilación automática de Sass
+
+- Recarga en vivo del navegador
+
+- Mejor control del proceso de build
+
+## Autor
+
+👤 **Marco Parra**
+
+- GitHub: [github](https://github.com/mrigorir)
+- X: [twitter](https://twitter.com/marcoparra311)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/marco-parra-web-developer/)
+
+## 🤝 Contribuciones
+
+Contribuciones o inquitudes son bienvenidas.
+
+Chequen la pagina de [inquitudes si hace falta](issues/).
+
+## Muestren su apoyo
+
+¡Denle una ⭐️ si les ha gustado el proyecto!
+
+## Reconocimientos
+
+- 👤 [SASS](https://sass-lang.com/)
+
+## 📝 Licencia
+
+Este proyecto esta registrado [MIT](lic.url).
