@@ -1,3 +1,7 @@
+/* ==========================================================================
+   BREAKPOINTS
+   ========================================================================== */
+
 @use "sass:map";
 
 $breakpoints: (
@@ -17,35 +21,5 @@ $breakpoints: (
     }
   } @else {
     @error "Breakpoint '#{$breakpoint}' no existe en $breakpoints";
-  }
-}
-
-.responsive-test {
-  @include respond-to(xs) {
-    color: red;
-  }
-
-  @include respond-to(sm) {
-    color: yellow;
-  }
-
-  @include respond-to(md) {
-    color: blue;
-  }
-
-  @include respond-to(lg) {
-    color: green;
-  }
-
-  @include respond-to(xl) {
-    color: purple;
-  }
-
-  @include respond-to(xxl) {
-    color: orange;
-  }
-
-  @include respond-to(xxxl) {
-    color: pink;
   }
 }

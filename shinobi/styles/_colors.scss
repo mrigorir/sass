@@ -1,3 +1,7 @@
+/* ==========================================================================
+   COLORS
+   ========================================================================== */
+
 @use "sass:color";
 @use "sass:map";
 
@@ -21,8 +25,13 @@ $colors: (
   "purple": #9900ff,
   "pink": #ffc0cb,
   "gray": #808080,
+  "light-gray": #e0e0e0,
   "black": #000,
+  "mid-black": #1e1e1e,
   "white": #fff,
+  "mid-white": #f0f0f0,
+  "divider": #444,
+  "transparent": transparent
 );
 
 @each $key, $val in $colors {

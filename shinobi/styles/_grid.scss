@@ -1,3 +1,7 @@
+/* ==========================================================================
+   GRID SYSTEM & BREAKPOINTS
+   ========================================================================== */
+
 @use "../styles/breakpoints" as bp;
 @use "sass:math";
 
@@ -64,7 +68,6 @@ $grid-gaps: (
   "4": 2rem,
   "5": 3rem,
 );
-
 
 // 4. Fila optimizada
 .row {
@@ -303,32 +306,3 @@ $alignments: (
     order: #{$i};
   }
 }
-
-// 10. Ejemplos de usos en el HTML
-/* <!-- Contenedor estándar centrado -->
-<div class="container container--centered">...</div>
-
-<!-- Contenedor fluido al 100% -->
-<div class="container container--fluid">...</div>
-
-<!-- Ejemplos de utilidades flex responsivas -->
-<div class="d-flex flex-column flex-md-row justify-center justify-lg-between">
-  <div class="self-start self-md-center">...</div>
-</div>
-
-<div class="d-grid flex-wrap flex-lg-nowrap align-start align-xl-end">
-  ...
-</div> 
-
-<div class="col-xs-12">12 columnas en móvil</div>
-
-<div class="col-sm-6">6 columnas en sm (≥576px)</div>
-
-<div class="col-md-4">4 columnas en md (≥768px)</div>
-
-<div class="col-lg-3">3 columnas en lg (≥992px)</div>
-
-<div class="col-xl-2">2 columnas en xl (≥1200px)</div>
-
-<div class="col-xxl-1">1 columna en xxl (≥1400px)</div>
-*/

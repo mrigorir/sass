@@ -1,20 +1,301 @@
+/* ==========================================================================
+   UTILITY CLASSES
+   ========================================================================== */
+
 @use "./variables";
+@use "./colors";
 
 @use "sass:math";
 @use "sass:map";
+@use "sass:meta";
+@use "sass:string";
+
+// Font weights
+$font-weights: (
+  "thin": 100,
+  "extralight": 200,
+  "light": 300,
+  "normal": 400,
+  "medium": 500,
+  "semibold": 600,
+  "bold": 700,
+  "extrabold": 800,
+  "black": 900
+);
+
+// Shadows Variations
+$box-shadows: (
+  "sm": 0 1px 2px 0 rgba(0, 0, 0, 0.05),
+  "base": variables.$base-box-shadow,
+  "md": 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  "lg": 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  "xl": 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  "inner": inset 0 2px 4px 0 rgba(0, 0, 0, 0.05),
+  "none": none
+);
+
+$text-shadows: (
+  "sm": 0 1px 1px rgba(211, 9, 9, 0.1),
+  "base": variables.$base-text-shadow,
+  "md": 0 2px 4px rgba(0, 0, 0, 0.2),
+  "lg": 0 4px 8px rgba(0, 0, 0, 0.3),
+  "none": none
+);
+
+$badge-variants: (
+  "primary": (
+    "background": map.get(colors.$colors, "primary"),
+    "color": white,
+    "border": none
+  ),
+  "secondary": (
+    "background": map.get(colors.$colors, "secondary"),
+    "color": white,
+    "border": none
+  ),
+  "success": (
+    "background": map.get(colors.$colors, "green"),
+    "color": white,
+    "border": none
+  ),
+  "danger": (
+    "background": map.get(colors.$colors, "error"),
+    "color": white,
+    "border": none
+  ),
+  "warning": (
+    "background": map.get(colors.$colors, "orange"),
+    "color": black,
+    "border": none
+  ),
+  "info": (
+    "background": map.get(colors.$colors, "info"),
+    "color": white,
+    "border": none
+  ),
+  "light": (
+    "background": #f8f9fa,
+    "color": #212529,
+    "border": 1px solid #dee2e6
+  ),
+  "dark": (
+    "background": #212529,
+    "color": white,
+    "border": none
+  )
+);
+
+// Badge sizes
+$badge-sizes: (
+  "sm": (
+    "font-size": 0.65rem,
+    "padding-y": 0.25em,
+    "padding-x": 0.5em
+  ),
+  "md": (
+    "font-size": variables.$badge-font-size,
+    "padding-y": variables.$badge-padding-y,
+    "padding-x": variables.$badge-padding-x
+  ),
+  "lg": (
+    "font-size": 0.85rem,
+    "padding-y": 0.5em,
+    "padding-x": 0.75em
+  )
+);
 
 $utilities: (
-  "padding": (
-    "prefix": "p",
+  /**
+   * Badge Base Styles
+   */
+  "badge": (
+    "prefix": "badge",
     "values": (
-      "0": 0,
-      "1": variables.$base-padding,
-      "2": variables.$base-padding * 2,
-      "3": variables.$base-padding * 4,
-      "4": variables.$base-padding * 6,
-      "5": variables.$base-padding * 8,
+      "base": (
+        "display": inline-block,
+        "padding": variables.$badge-padding-y variables.$badge-padding-x,
+        "font-size": variables.$badge-font-size,
+        "font-weight": 600,
+        "line-height": 1,
+        "text-align": center,
+        "white-space": nowrap,
+        "vertical-align": baseline,
+        "border-radius": variables.$badge-border-radius,
+        "transition": opacity 0.15s ease-in-out
+      )
     ),
+    "generate": false // No genera clase .badge-base, solo usa los estilos como base
   ),
+
+  /**
+   * Badge Variants
+   */
+  "badge-variant": (
+    "prefix": "badge",
+    "values": $badge-variants,
+    "property": null,
+    "generate-classes": true,
+    "custom-properties": (
+      "background": "background",
+      "color": "color",
+      "border": "border"
+    )
+  ),
+
+  /**
+   * Badge Sizes
+   */
+  "badge-size": (
+    "prefix": "badge",
+    "values": $badge-sizes,
+    "property": null,
+    "generate-classes": true,
+    "custom-properties": (
+      "font-size": "font-size",
+      "padding": "padding-y" "padding-x"
+    )
+  ),
+  /**
+   * Font Weight Utilities
+   */
+ "font-weight": (
+  "prefix": "font",
+  "values": (
+    "light": 300,
+    "normal": 400,
+    "medium": 500,
+    "bold": 700,
+    "black": 900
+  )
+),
+  /**
+    * Box Shadow Utilities
+   */
+  "box-shadow": (
+    "prefix": "shadow",
+    "values": $box-shadows
+  ),
+
+  /**
+   * Text Shadow Utilities
+   */
+  "text-shadow": (
+    "prefix": "text-shadow",
+    "values": $text-shadows
+  ),
+    /**
+   * Text Alignment Utilities
+   */
+  "text-align": (
+    "prefix": "text",
+    "values": (
+      "left": left,
+      "center": center,
+      "right": right,
+      "justify": justify
+    )
+  ),
+
+  /**
+   * Text Transform Utilities
+   */
+  "text-transform": (
+    "prefix": "text",
+    "values": (
+      "uppercase": uppercase,
+      "lowercase": lowercase,
+      "capitalize": capitalize,
+      "none": none
+    )
+  ),
+
+  /**
+   * Text Overflow Utilities
+   */
+  "text-overflow": (
+    "prefix": "text",
+    "values": (
+      "ellipsis": (
+        "white-space": nowrap,
+        "overflow": hidden,
+        "text-overflow": ellipsis
+      ),
+      "clip": (
+        "white-space": nowrap,
+        "overflow": hidden,
+        "text-overflow": clip
+      )
+    )
+  ),
+
+  /**
+   * Visibility Utilities
+   */
+  "visibility": (
+    "prefix": "visually",
+    "values": (
+      "hidden": (
+        "position": absolute,
+        "width": 1px,
+        "height": 1px,
+        "padding": 0,
+        "margin": -1px,
+        "overflow": hidden,
+        "clip": rect(0, 0, 0, 0),
+        "white-space": nowrap,
+        "border": 0
+      )
+    )
+  ),
+
+  /**
+   * Interaction Utilities
+   */
+  "pointer-events": (
+    "prefix": "pointer-events",
+    "values": (
+      "none": none,
+      "auto": auto
+    )
+  ),
+
+  "user-select": (
+    "prefix": "user-select",
+    "values": (
+      "none": none,
+      "text": text,
+      "all": all,
+      "auto": auto
+    )
+  ),
+
+  /**
+   * Object Fit Utilities
+   */
+  "object-fit": (
+    "prefix": "object",
+    "values": (
+      "cover": cover,
+      "contain": contain,
+      "fill": fill,
+      "none": none,
+      "scale-down": scale-down
+    )
+  ),
+  /**
+ * Padding utilities
+ */ "padding":
+    (
+      "prefix": "p",
+      "values": (
+        "0": 0,
+        "1": variables.$base-padding,
+        "2": variables.$base-padding * 2,
+        "3": variables.$base-padding * 4,
+        "4": variables.$base-padding * 6,
+        "5": variables.$base-padding * 8,
+      ),
+    ),
   "padding-left": (
     "prefix": "pl",
     "values": (
@@ -59,17 +340,21 @@ $utilities: (
       "5": variables.$base-padding * 8,
     ),
   ),
-  "margin": (
-    "prefix": "m",
-    "values": (
-      "0": 0,
-      "1": variables.$base-margin,
-      "2": variables.$base-margin * 2,
-      "3": variables.$base-margin * 4,
-      "4": variables.$base-margin * 6,
-      "5": variables.$base-margin * 8,
+  /**
+ * Margin utilities
+ */ "margin":
+    (
+      "prefix": "m",
+      "values": (
+        "0": 0,
+        "1": variables.$base-margin,
+        "2": variables.$base-margin * 2,
+        "3": variables.$base-margin * 4,
+        "4": variables.$base-margin * 6,
+        "5": variables.$base-margin * 8,
+        "auto": auto,
+      ),
     ),
-  ),
   "margin-right": (
     "prefix": "mr",
     "values": (
@@ -103,6 +388,7 @@ $utilities: (
       "5": variables.$base-margin * 8,
     ),
   ),
+
   "margin-bottom": (
     "prefix": "mb",
     "values": (
@@ -114,69 +400,421 @@ $utilities: (
       "5": variables.$base-margin * 8,
     ),
   ),
-  "opacity": (
-    "prefix": "o",
-    "values": (
-      "10": 0.1,
-      "20": 0.2,
-      "30": 0.3,
-      "40": 0.4,
-      "50": 0.5,
-      "60": 0.6,
-      "70": 0.7,
-      "80": 0.8,
-      "90": 0.9,
-      "100": 1,
+  /**
+ * Opacity utilities
+ */ "opacity":
+    (
+      "prefix": "opacity",
+      "values": (
+        "1": 0.1,
+        "2": 0.2,
+        "3": 0.3,
+        "4": 0.4,
+        "5": 0.5,
+        "6": 0.6,
+        "7": 0.7,
+        "8": 0.8,
+        "9": 0.9,
+        "10": 1,
+      ),
     ),
-  ),
-  "border-radius": (
-    "prefix": "br",
-    "values": (
-      "default": variables.$base-border-radius,
-      "none": 0,
-      "xs": math.div(variables.$base-border-radius, 4),
-      "sm": math.div(variables.$base-border-radius, 2),
-      "lg": variables.$base-border-radius * 2,
-      "full": 50%,
+  /**
+ * Display utilities
+ */ "display":
+    (
+      "prefix": "d",
+      "values": (
+        "none": none,
+        "block": block,
+        "flex": flex,
+        "inline": inline,
+        "inline-block": inline-block,
+        "inline-flex": inline-flex,
+        "grid": grid,
+      ),
     ),
-  ),
-  "display": (
-    "prefix": "display",
-    "values": (
-      "n": none,
-      "b": block,
-      "f": flex,
-      "i": inline,
-      "i-b": inline-block,
-      "g": grid,
+  /**
+ * Font utilities
+ */ "font-size":
+    (
+      "prefix": "font",
+      "values": (
+        "sm": variables.$font-size-sm,
+        "md": variables.$base-font-size,
+        "lg": variables.$font-size-lg,
+        "xl": variables.$font-size-xl,
+        "xxl": variables.$font-size-xxl,
+      ),
     ),
-  ),
-  "font-size": (
-    "prefix": "font",
+      /**
+   * Flexbox Utilities
+   */
+  "flex-direction": (
+    "prefix": "flex",
     "values": (
-      "sm": variables.$font-size-sm,
-      "md": variables.$base-font-size,
-      "lg": variables.$font-size-lg,
-      "xl": variables.$font-size-xl,
-      "xxl": variables.$font-size-xxl,
-    ),
+      "row": row,
+      "row-reverse": row-reverse,
+      "column": column,
+      "column-reverse": column-reverse
+    )
   ),
+  
+  "flex-wrap": (
+    "prefix": "flex",
+    "values": (
+      "wrap": wrap,
+      "nowrap": nowrap,
+      "wrap-reverse": wrap-reverse
+    )
+  ),
+  
+  "justify-content": (
+    "prefix": "justify",
+    "values": (
+      "start": flex-start,
+      "end": flex-end,
+      "center": center,
+      "between": space-between,
+      "around": space-around,
+      "evenly": space-evenly
+    )
+  ),
+  
+  "align-items": (
+    "prefix": "align",
+    "values": (
+      "start": flex-start,
+      "end": flex-end,
+      "center": center,
+      "baseline": baseline,
+      "stretch": stretch
+    )
+  ),
+  
+  "align-self": (
+    "prefix": "self",
+    "values": (
+      "auto": auto,
+      "start": flex-start,
+      "end": flex-end,
+      "center": center,
+      "stretch": stretch,
+      "baseline": baseline
+    )
+  ),
+  
+  "flex-grow": (
+    "prefix": "flex-grow",
+    "values": (
+      "0": 0,
+      "1": 1
+    )
+  ),
+  
+  "flex-shrink": (
+    "prefix": "flex-shrink",
+    "values": (
+      "0": 0,
+      "1": 1
+    )
+  ),
+
+  /**
+   * Grid Utilities
+   */
+  "grid-auto-flow": (
+    "prefix": "grid-flow",
+    "values": (
+      "row": row,
+      "col": column,
+      "dense": dense
+    )
+  ),
+  
+  "gap": (
+    "prefix": "gap",
+    "values": (
+      "0": 0,
+      "1": 0.25rem,
+      "2": 0.5rem,
+      "3": 1rem,
+      "4": 1.5rem,
+      "5": 2rem
+    )
+  ),
+  
+  "grid-template-columns": (
+    "prefix": "grid-cols",
+    "values": (
+      "1": repeat(1, minmax(0, 1fr)),
+      "2": repeat(2, minmax(0, 1fr)),
+      "3": repeat(3, minmax(0, 1fr)),
+      "4": repeat(4, minmax(0, 1fr)),
+      "5": repeat(5, minmax(0, 1fr)),
+      "6": repeat(6, minmax(0, 1fr)),
+      "12": repeat(12, minmax(0, 1fr))
+    )
+  ),
+  
+  "grid-column": (
+    "prefix": "col",
+    "values": (
+      "auto": auto,
+      "span-1": span 1,
+      "span-2": span 2,
+      "span-3": span 3,
+      "span-4": span 4,
+      "span-5": span 5,
+      "span-6": span 6,
+      "span-full": string.unquote("1 / -1"),
+    )
+  )
 );
 
-// generate utility classes
+/**
+ * Generate utility classes
+ */
 @each $property, $map in $utilities {
   $prefix: map.get($map, "prefix");
   $values: map.get($map, "values");
 
   @each $key, $value in $values {
-    @if ($key == "default") {
+    @if $key == "default" {
       .#{$prefix} {
-        #{$property}: $value;
+        // Para propiedades con múltiples valores (como text-ellipsis)
+        @if meta.type-of($value) == "map" {
+          @each $sub-property, $sub-value in $value {
+            #{$sub-property}: $sub-value;
+          }
+        } @else {
+          #{$property}: $value;
+        }
       }
     } @else {
       .#{$prefix}-#{$key} {
+        // Para propiedades con múltiples valores
+        @if meta.type-of($value) == "map" {
+          @each $sub-property, $sub-value in $value {
+            #{$sub-property}: $sub-value;
+          }
+        } @else {
+          #{$property}: $value;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Border Utilities Map
+ */
+$border-utilities: (
+  /**
+   * Border Style Utilities
+   */ "border-style":
+    (
+      "prefix": "border",
+      "values": (
+        "solid": solid,
+        "dotted": dotted,
+        "dashed": dashed,
+        "double": double,
+      ),
+    ),
+
+  /**
+   * Border Width Utilities
+   */ "border-width":
+    (
+      "prefix": "border",
+      "values": (
+        "1": 1px,
+        "2": 2px,
+        "3": 3px,
+        "4": 4px,
+        "5": 5px,
+        "6": 6px,
+        "7": 7px,
+        "8": 8px,
+        "9": 9px,
+        "10": 10px,
+      ),
+    ),
+
+  /**
+   * Border Color Utilities
+   */ "border-color":
+    (
+      "prefix": "border",
+      "values": (
+        "primary": map.get(colors.$colors, "primary"),
+        "secondary": map.get(colors.$colors, "secondary"),
+        "error": map.get(colors.$colors, "error"),
+        "info": map.get(colors.$colors, "info"),
+        "blue": #1919e6,
+        "red": #e61919,
+        "yellow": #e6e619,
+        "green": #19e635,
+        "orange": #ffa600,
+        "purple": #9900ff,
+        "pink": #ffc0cb,
+        "gray": #808080,
+        "black": #000,
+        "white": #fff,
+        "light": #e0e0e0,
+        "transparent": transparent,
+      ),
+    ),
+
+  /**
+   * Border Radius Utilities (ya existente, lo mantengo como referencia)
+   */
+    "border-radius":
+    (
+      "prefix": "br",
+      "values": (
+        "default": variables.$base-border-radius,
+        "none": 0,
+        "xs": math.div(variables.$base-border-radius, 4),
+        "sm": math.div(variables.$base-border-radius, 2),
+        "lg": variables.$base-border-radius * 2,
+        "full": 50%,
+      ),
+    )
+);
+
+@mixin generate-badges {
+  // Clase base badge
+  .badge {
+    @each $property, $value in map.get(map.get($utilities, "badge", "values"), "base") {
+      #{$property}: $value;
+    }
+  }
+
+  // Variantes de color
+  @each $variant, $styles in $badge-variants {
+    .badge-#{$variant} {
+      @each $property, $value in $styles {
         #{$property}: $value;
       }
     }
   }
+
+  // Tamaños
+  @each $size, $styles in $badge-sizes {
+    .badge-#{$size} {
+      @each $property, $value in $styles {
+        #{$property}: $value;
+      }
+    }
+  }
+
+  // Badge pill (más redondeado)
+  .badge-pill {
+    border-radius: 50rem;
+  }
+
+  // Badge como enlace
+  a.badge {
+    &:hover {
+      opacity: 0.85;
+      text-decoration: none;
+    }
+  }
+}
+
+@include generate-badges;
+
+/**
+ * Generate Border Utility Classes
+ */
+@each $property, $map in $border-utilities {
+  $prefix: map.get($map, "prefix");
+  $values: map.get($map, "values");
+  $border-colors: map.get($border-utilities, "border-color", "values");
+
+  @each $key, $value in $values {
+    // Clases para estilos de borde (solid, dotted, dashed)
+    @if $property == "border-style" {
+      .border-#{$key} {
+        border-style: $value;
+        // Borde gris claro por defecto
+        border-color: map.get($border-colors, "light");
+        border-width: 1px; // Ancho por defecto
+      }
+    }
+    // Clases para anchos de borde (1-10px)
+    @else if $property == "border-width" {
+      .border-#{$key} {
+        border-width: $value;
+      }
+    }
+    // Clases para colores de borde
+    @else if $property == "border-color" {
+      .border-#{$key} {
+        border-color: $value;
+      }
+    }
+    // Clases combinadas estilo + ancho (border-solid-1, border-dashed-3, etc.)
+    @if $property == "border-style" {
+      @each $width-key,
+        $width-value in map.get($border-utilities, "border-width", "values")
+      {
+        .border-#{$key}-#{$width-key} {
+          border-style: $value;
+          border-width: $width-value;
+          border-color: map.get($border-colors, "light");
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Clases adicionales para bordes específicos (top, right, bottom, left)
+ */
+@each $side in (top, right, bottom, left) {
+  $border-colors: map.get($border-utilities, "border-color", "values");
+  // Estilos de borde por lado
+  @each $style-key,
+    $style-value in map.get($border-utilities, "border-style", "values")
+  {
+    .border-#{$side}-#{$style-key} {
+      border-#{$side}-style: $style-value;
+      border-#{$side}-width: 1px;
+      border-#{$side}-color: map.get($border-colors, "light");
+    }
+
+    // Anchos de borde por lado
+    @each $width-key,
+      $width-value in map.get($border-utilities, "border-width", "values")
+    {
+      .border-#{$side}-#{$width-key} {
+        border-#{$side}-width: $width-value;
+      }
+
+      // Combinación estilo + ancho por lado
+      .border-#{$side}-#{$style-key}-#{$width-key} {
+        border-#{$side}-style: $style-value;
+        border-#{$side}-width: $width-value;
+        border-#{$side}-color: map.get($border-colors, "light");
+      }
+    }
+
+    // Colores por lado
+    @each $color-key,
+      $color-value in $border-colors
+    {
+      .border-#{$side}-#{$color-key} {
+        border-#{$side}-color: $color-value;
+      }
+    }
+  }
+}
+
+/**
+ * Clase base para reset de bordes
+ */
+.border-none {
+  border: none;
 }
