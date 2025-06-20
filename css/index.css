@@ -36,6 +36,10 @@
   color: #1ac888;
 }
 
+.text-hover-secondary:hover {
+  color: #1ac888;
+}
+
 .bg-secondary {
   background-color: #1ac888;
 }
@@ -171,7 +175,6 @@
  * Dark mode preference
  */
 @media screen and (prefers-color-scheme: dark) {
-  *,
   html,
   body {
     background-color: #1e1e1e;
@@ -517,6 +520,28 @@ button, input, textarea, select {
 /* ==========================================================================
    INDEX DIRECTORY
    ========================================================================== */
+.navbar .container, .navbar-primary .container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.navbar, .navbar-primary {
+  padding: 0.75rem 1.5rem;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
+}
+.navbar .site-title, .navbar-primary .site-title {
+  font-size: 1.5rem;
+}
+.navbar-primary {
+  background-color: #326dee;
+}
+
+/* ==========================================================================
+   INDEX DIRECTORY
+   ========================================================================== */
 /* ==========================================================================
    UTILITY CLASSES
    ========================================================================== */
@@ -548,6 +573,10 @@ button, input, textarea, select {
   margin-right: 1.5rem;
 }
 
+.ml-1 {
+  margin-left: 0.75rem;
+}
+
 .mt-4 {
   margin-top: 4.5rem;
 }
@@ -558,6 +587,10 @@ button, input, textarea, select {
 
 .mb-4 {
   margin-bottom: 4.5rem;
+}
+
+.d-flex {
+  display: flex;
 }
 
 .font-sm {

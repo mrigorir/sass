@@ -1,0 +1,35 @@
+@use "../variables";
+@use "../colors";
+
+// Con el signo %, el bloque selector flex-layout no es compilado en el CSS, sus propiedades pasan a estar dentro de los otros selectores donde se llamen
+// El @extend es una versión simplificada del @mixin que se usa cuando no requieres pasar argumentos y se compila distonto en el CSS
+
+%flex-layout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+
+.navbar {
+  padding: variables.$base-padding variables.$base-padding * 2;
+  box-shadow: variables.$base-box-shadow;
+
+  .site-title {
+    font-size: variables.$font-size-lg;
+  }
+
+  .container {
+    @extend %flex-layout;
+  }
+}
+
+@each $key, $val in colors.$colors {
+  .navbar-#{$key} {
+    @extend .navbar;
+    background-color: $val;
+  }
+}
+

@@ -10,7 +10,6 @@
  * Dark mode preference
  */
 @media screen and (prefers-color-scheme: dark) {
-  *,
   html,
   body {
     background-color: map.get(colors.$colors, "mid-black");
